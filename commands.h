@@ -83,6 +83,6 @@ void slsi(uint16_t wIndex, uint16_t data);
  */
 void dlfirm(const char *file);
 
-void receive_data();
+int receive_data();
 
 #endif

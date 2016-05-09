@@ -264,8 +264,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	// receive audio and video from device
-	while (is_running) {
-		receive_data();
+	while (is_running && !receive_data()) {
 	}
 
 end:

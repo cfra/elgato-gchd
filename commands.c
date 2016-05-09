@@ -181,10 +181,16 @@ void dlfirm(const char *file) {
 	fclose(bin);
 }
 
-void receive_data() {
+int receive_data() {
 	int transfer;
+	int rv;
 	unsigned char data[DATA_BUF] = {0};
 
-	libusb_bulk_transfer(devh, 0x81, data, DATA_BUF, &transfer, 5000);
-	write(fd_fifo, (char *)data, DATA_BUF);
+	rv = libusb_bulk_transfer(devh, 0x81, data, DATA_BUF, &transfer, 5000);
+	if (rv != 0) {
+		fprintf(stderr, "Could not received video data: %s\n", libusb_strerror(rv));
+		return 1;
+	}
+	write(fd_fifo, (char *)data, transfer);
+	return 0;
 }
